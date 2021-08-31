@@ -50,7 +50,9 @@ Pros:
 Cons:
 - Sometimes difficult to escape shell characters
 
-### Example of using `ENTRYPOINT` (Note: you must set `LaceworkRunAsEntrypoint="true"` when using sidecar script as `ENTRYPOINT`)
+### Example of using `ENTRYPOINT`
+(Note: you must set `LaceworkRunAsEntrypoint="true"` when using sidecar script as `ENTRYPOINT`)
+
 ```
 ENTRYPOINT ["/shared/lacework.sh"]
 CMD ["nginx", "-g", "daemon off;"]
