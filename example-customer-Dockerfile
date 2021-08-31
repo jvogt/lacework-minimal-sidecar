@@ -1,0 +1,28 @@
+#############################
+# Lacework Additions (step 1)
+# Load the minimal datacollector sidecar docker image we had the customer build
+FROM jdvogt/lacework-minimal-sidecar:latest
+
+#############################
+# Customer Docker container
+FROM alpine
+MAINTAINER Roy Lines <https://roylines.co.uk>
+
+RUN apk --no-cache add nginx
+
+RUN rm -rf /etc/nginx/*
+RUN rm -rf /usr/share/nginx
+EXPOSE 80
+COPY nginx.conf /etc/nginx/nginx.conf
+
+#############################
+# Lacework Additions (step 2)
+
+COPY --from=0 /shared/ /shared/
+
+ENTRYPOINT ["/shared/lacework.sh"]
+CMD ["nginx", "-g", "daemon off;"]
+
+# Alternatively:
+# ENTRYPOINT ["docker-entrypoint.sh"] # this is the official ENTRYPOINT from nginx
+# CMD ["sh", "-c", "/shared/lacework.sh && nginx -g \"daemon off;\""]

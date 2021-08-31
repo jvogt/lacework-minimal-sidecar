@@ -1,0 +1,38 @@
+# generic template for creating a task definition for a service
+---
+AWSTemplateFormatVersion: '2010-09-09'
+
+Resources:
+  TaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      RequiresCompatibilities:
+        - FARGATE
+      ContainerDefinitions:
+        - name: your-app
+          image: your-image
+          essential: true
+          environment:
+            - Name: "LaceworkAccessToken"
+              Value: "......"
+            - Name: "LaceworkRunAsEntrypoint"
+              Value: "true"
+          entryPoint:
+            - sh 
+            - -x 
+            - /shared/lacework.sh
+          command:
+            - "nginx"
+            - "-g"
+            - "daemon off;"
+          volumesFrom:
+            - sourceContainer: datacollector-sidecar
+              readOnly: true
+          dependsOn:
+            - containerName: datacollector-sidecar
+              condition: SUCCESS
+
+        # Adding Lacework datacollector
+        - name: datacollector-sidecar
+          image: jdvogt/lacework-minimal-sidecar
+          essential: false
