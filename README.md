@@ -20,6 +20,7 @@ See [example-task-def.yaml](example-task-def.yaml) for an example of this
 
 Pros:
 - Do not have to change existing docker images
+
 Cons:
 - Need to modify all task definitions
 - Need to set `ENTRYPOINT` / `CMD` in task definition (cannot use whats built into your application containers)
@@ -32,6 +33,7 @@ See [example-customer-Dockerfile](example-customer-Dockerfile) for an example of
 Pros:
 - Simplify task definitions at Fargate
 - Possible to embed into a base image consumable by all teams using Docker
+
 Cons:
 - Need to modify all `Dockerfiles` to embed, unless using a common internally-managed base docker image (pro tip: use a common entrypoint and execute the Lacework sidecar script here)
 
@@ -47,6 +49,7 @@ Note that everything following `"-c"` is in one string and not broken up.  This 
 
 Pros:
 - Retain existing `ENTRYPOINT`
+
 Cons:
 - Sometimes difficult to escape shell characters
 
@@ -60,6 +63,7 @@ CMD ["nginx", "-g", "daemon off;"]
 
 Pros:
 - Much more docker-like.  `CMD` works as expected
+
 Cons:
 - Cannot use existing `ENTRYPOINT`
 - Will start datacollector even when using docker exec
