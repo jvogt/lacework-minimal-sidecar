@@ -33,7 +33,7 @@ echo $LW_CONFIG > /var/lib/lacework/config/config.json
 
 
 # Optional debug logging
-if [ "$LaceworkDebug" == "true" ]; then
+if [ "$LaceworkDebug" = "true" ]; then
   echo "Debug mode: tailing /var/log/lacework/datacollector.log"
   touch /var/log/lacework/datacollector.log
   tail -f /var/log/lacework/datacollector.log &
@@ -44,7 +44,7 @@ fi
 if [ ! -f /etc/ssl/certs/ca-certificates.crt ]; then
   echo "WARNING: Root certs not found, to add them set LaceworkAddRootCerts=true"
 fi
-if [ "$LaceworkAddRootCerts" == "true" ]; then
+if [ "$LaceworkAddRootCerts" = "true" ]; then
   echo "Copying root certs from Lacework volume to /etc/ssl/certs/ca-certificates.crt"
   mkdir -p /etc/ssl/certs
   cp /shared/ca-certificates.crt /etc/ssl/certs
@@ -56,9 +56,9 @@ fi
 echo "Lacework datacollector started"
 
 # Optionally operate as ENTRYPOINT script (run customer CMD as presented by docker)
-if [ "$LaceworkRunAsEntrypoint" == "true" ]; then
+if [ "$LaceworkRunAsEntrypoint" = "true" ]; then
   echo "Lacework sidecar running as ENTRYPOINT"
-  if [ "$LaceworkDebug" == "true" ]; then
+  if [ "$LaceworkDebug" = "true" ]; then
     echo "Executing: exec \"${@}\""
   fi
   exec "$@"
