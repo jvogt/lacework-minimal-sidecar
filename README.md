@@ -68,6 +68,15 @@ Cons:
 - Cannot use existing `ENTRYPOINT`
 - Will start datacollector even when using docker exec
 
+## Running as a non-root user
+If you elect to run your application container as a non-root user, the sidecar provided entrypoint will need to be executed using `sudo`. This will require your application container to be built with `sudo` present, and your non-root user will need to be added as a member of the `sudoers` file in the application image.
+
+When invoking the sidecar as a non-root user, prepend the `CMD` or `ENTRYPOINT` with a `sudo -E`, as -E preserves the environment when invoking sudo.
+
+```
+CMD ["sh","-c","sudo -E /shared/lacework.sh && nginx -g \"daemon off;\""]
+```
+
 ## Reference:
 ### Environment Variables Supported by `lacework.sh`
 | Environment Variable | Description |
@@ -76,3 +85,4 @@ Cons:
 | `LaceworkDebug="true"` | (Optional, will tail datacollector.log) |
 | `LaceworkAddRootCerts="true"` | (Optional, creates /etc/ssl/certs/ca-certificates.crt) |
 | `LaceworkRunAsEntrypoint="true"` | (Optional, use if setting lacework.sh as ENTRYPOINT in docker. This script will execute whatever is presented in CMD) |
+
