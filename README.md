@@ -1,4 +1,6 @@
 # lacework-minimal-sidecar
+
+[![IaC](https://app.soluble.cloud/api/v1/public/badges/7c048d8a-8d6b-454d-bd7b-db76c9deaa71.svg)](https://app.soluble.cloud/repos/details/github.com/jvogt/lacework-minimal-sidecar)  
 Minimal Docker Image for Lacework Sidecar (for use on AWS Fargate).  This Docker image is intended to be loaded as a volume where the `/shared` directory contains the lacework agent, the sidecar startup script, and an optional ca-certificates.crt file.
 
 Can be used directly from Dockerhub (!!! For TESTING !!!) or use this code to build and maintain on your own until supported by Lacework.
