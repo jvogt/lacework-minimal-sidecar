@@ -61,11 +61,17 @@ ENTRYPOINT ["/shared/lacework.sh"]
 CMD ["nginx", "-g", "daemon off;"]
 ```
 
+If you already have an entrypoint, simply prepend `/shared/lacework.sh` to your entrypoint.
+
+```
+ENTRYPOINT ["/shared/lacework.sh", "/existing/entrypoint/here.sh"]
+CMD ["nginx", "-g", "daemon off;"]
+```
+
 Pros:
 - Much more docker-like.  `CMD` works as expected
 
 Cons:
-- Cannot use existing `ENTRYPOINT`
 - Will start datacollector even when using docker exec
 
 ## Running as a non-root user
